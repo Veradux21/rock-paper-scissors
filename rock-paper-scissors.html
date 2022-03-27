@@ -17,7 +17,6 @@
             } else {
                 cpuChoice = "Scissors"
             };
-            console.log("Computer chose " + cpuChoice);
             return cpuChoice        
         };
 
@@ -34,24 +33,41 @@
                 console.log("Please try again by entering Rock, Paper, or Scissors!");
                 return;
             } else if (playerSelection == cpuSelection){
-                    result = `It's a draw!`
-                } else if (playerSelection == "Rock" && cpuSelection == "Paper"){
-                    result = `You Lose! ${cpuSelection} beats ${playerSelection}!`;
-                } else if (playerSelection == "Paper" && cpuSelection == "Scissors"){
-                    result = `You Lose! ${cpuSelection} beats ${playerSelection}!`;
-                } else if (playerSelection == "Scissors" && cpuSelection == "Rock"){
-                    result = `You Lose! ${cpuSelection} beats ${playerSelection}!`;
-                } else { result = `You Win! ${playerSelection} beats ${cpuSelection}!`;
+                    result = "Draw"
+                } else if ((playerSelection == "Rock" && cpuSelection == "Paper") || (playerSelection == "Paper" && cpuSelection == "Scissors") || (playerSelection == "Scissors" && cpuSelection == "Rock")){
+                    result = "Lose";
+                } else { result = "Win";
                 };
-            console.log(result)
+            return result
         }
 
         const playerSelection = "rock";
         const cpuSelection = cpuPlay();
-        console.log(playRound(playerSelection, cpuSelection))
+        /* console.log(playRound(playerSelection, cpuSelection)) */
+
+        function game(){
+            for (let i=0; i<5, i++;){
+                let cpuWin = 0;
+                let playerWin = 0;
+                playRound(playerSelection,cpuSelection);
+                if (result == "Win"){
+                    playerWin++;
+                    console.log(`You Win! ${playerSelection} beats ${cpuSelection}!`)
+                } else if (result = "Lose"){
+                    cpuWin++;
+                    console.log(`You Lose! ${cpuSelection} beats ${playerSelection}!`)
+                } else {console.log('You Draw!')}
+            }
+        }
+
+        /* 
+        `You Lose! ${cpuSelection} beats ${playerSelection}!`; 
+        `You Win! ${playerSelection} beats ${cpuSelection}!`;
+        */
     </script>
 </head>
 <body>
     
 </body>
 </html>
+
