@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let cpuSelection;
+        let result;
+
+        function computerPlay() {
+            let cpuNum = Math.random();
+            if (cpuNum <= .3){
+                cpuSelection = "Rock"
+            } else if (cpuNum <= .6) {
+                cpuSelection = "Paper"
+            } else {
+                cpuSelection = "Scissors"
+            };
+            console.log("Computer chose " + cpuSelection);
+            return cpuSelection        
+        };
+
+        let cap = function(string) {
+            string = string.toLowerCase();
+            let first = string.charAt(0);
+            return first.toUpperCase() + string.slice(1); 
+        };
+
+        function playRound(playerSelection) {
+            computerPlay()
+            playerSelection = cap(playerSelection)
+    /*         if (!(playerSelection == "Rock" || playerSelection == "Scissors" || playerSelection == "Paper"))  */
+            if (playerSelection == cpuSelection){
+                result = `It's a draw!`
+            } else if (playerSelection == "Rock" && cpuSelection == "Paper"){
+                result = `You Lose! ${cpuSelection} beats ${playerSelection}!`;
+            } else if (playerSelection == "Paper" && cpuSelection == "Scissors"){
+                result = `You Lose! ${cpuSelection} beats ${playerSelection}!`;
+            } else if (playerSelection == "Scissors" && cpuSelection == "Rock"){
+                result = `You Lose! ${cpuSelection} beats ${playerSelection}!`;
+            } else { result = `You Win! ${playerSelection} beats ${cpuSelection}!`;
+            };
+            console.log(result)
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
