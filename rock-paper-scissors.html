@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        let result;
+
 
         function cpuPlay() {
             let cpuNum = Math.random();
@@ -26,37 +26,41 @@
             return first.toUpperCase() + string.slice(1); 
         };
 
-        function playRound(playerSelection, cpuSelection) {
-            /* computerPlay() */
-            playerSelection = cap(playerSelection)
-            if (!(playerSelection == "Rock" || playerSelection == "Scissors" || playerSelection == "Paper")) { 
+        function playRound(player, cpu) {
+            player = cap(player);
+            let result;
+            if (!(player == "Rock" || player == "Scissors" || player == "Paper")) { 
                 console.log("Please try again by entering Rock, Paper, or Scissors!");
                 return;
-            } else if (playerSelection == cpuSelection){
-                    result = "Draw"
-                } else if ((playerSelection == "Rock" && cpuSelection == "Paper") || (playerSelection == "Paper" && cpuSelection == "Scissors") || (playerSelection == "Scissors" && cpuSelection == "Rock")){
-                    result = "Lose";
-                } else { result = "Win";
+            } else if (player == cpu){
+                    result = "You Draw!"
+                } else if ((player == "Rock" && cpu == "Paper") || (player == "Paper" && cpu == "Scissors") || (player == "Scissors" && cpu == "Rock")){
+                    result = `You Lose! ${cpu} beats ${player}!`;
+                } else { result = `You Win! ${player} beats ${cpu}!`;
                 };
-            return result
+            console.table([result, cpu, player])    
+            return result;
         }
 
-        const playerSelection = "rock";
-        const cpuSelection = cpuPlay();
         /* console.log(playRound(playerSelection, cpuSelection)) */
-
+        
         function game(){
-            for (let i=0; i<5, i++;){
+            for (let i=0; i<5; i++){
+                let playerSelection = prompt("Rock, Paper, or Scissors?");
+                /* playerSelection = cap(playerSelection) */
+                console.log("Player chose: " + playerSelection)
+                let cpuSelection = cpuPlay();
+                console.log(cpuSelection);
                 let cpuWin = 0;
                 let playerWin = 0;
-                playRound(playerSelection,cpuSelection);
-                if (result == "Win"){
+                let resultMessage = playRound(playerSelection,cpuSelection);
+                if (resultMessage.slice(0,7) == "You Win"){
                     playerWin++;
-                    console.log(`You Win! ${playerSelection} beats ${cpuSelection}!`)
-                } else if (result = "Lose"){
+                    console.log(resultMessage);
+                } else if (resultMessage.slice(0,7) == "You Los"){
                     cpuWin++;
-                    console.log(`You Lose! ${cpuSelection} beats ${playerSelection}!`)
-                } else {console.log('You Draw!')}
+                    console.log(resultMessage);
+                } else {console.log(resultMessage)}
             }
         }
 
