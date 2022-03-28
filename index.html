@@ -7,12 +7,19 @@
     <title>Document</title>
     <script>
 
+        //Standard Function to ensure that any entry is Title Cased
+        let cap = function(string) {
+            string = string.toLowerCase();
+            let first = string.charAt(0);
+            return first.toUpperCase() + string.slice(1); 
+        };
 
+        //Function to randomly select Rock, Paper, or Scissors for the computer
         function cpuPlay() {
             let cpuNum = Math.random();
-            if (cpuNum <= .3){
+            if (cpuNum <= .33){
                 cpuChoice = "Rock"
-            } else if (cpuNum <= .6) {
+            } else if (cpuNum <= .66) {
                 cpuChoice = "Paper"
             } else {
                 cpuChoice = "Scissors"
@@ -20,12 +27,7 @@
             return cpuChoice        
         };
 
-        let cap = function(string) {
-            string = string.toLowerCase();
-            let first = string.charAt(0);
-            return first.toUpperCase() + string.slice(1); 
-        };
-
+        //Function to run a single game based on parameters.
         function playRound(player, cpu) {
             player = cap(player);
             let result;
@@ -42,25 +44,25 @@
             return result;
         }
 
-        let cpuWin = 0;
-        let playerWin = 0;
-        
+        //Runs 5 games, tracks score, and presents score. Utilizes cpuPlay to define CPU parameter, prompt for player parameter of playRound.        
         function game(){
-            cpuWin = 0;
-            playerWin = 0;
+            let cpuWin = 0;
+            let playerWin = 0;
+            //Run 5 Games
             for (let i=0; i<5; i++){
-                let playerSelection = prompt("Rock, Paper, or Scissors?");
-                console.log("Player chose: " + cap(playerSelection))
-                let cpuSelection = cpuPlay();
+                let playerSelection = prompt("Rock, Paper, or Scissors?"); //Use Prompt to determine player RPS
+///*For Debugging!*/console.log("Player chose: " + cap(playerSelection))
+                let cpuSelection = cpuPlay(); //Use cpuPlay to determine random RPS
                 let resultMessage = playRound(playerSelection,cpuSelection);
                 if (resultMessage.slice(0,7) == "You Win"){
-                    playerWin++;
-                    console.log(resultMessage);
+                    playerWin++;//increment for score tracking
+                    console.log(resultMessage); //publish single game result
                 } else if (resultMessage.slice(0,7) == "You Los"){
                     cpuWin++;
                     console.log(resultMessage);
-                } else {console.log(resultMessage)}
+                } else {console.log(resultMessage)} //Publish Draw result
             }
+            //Present Final Score
             if (cpuWin > playerWin) {
                 console.log(`Final result! CPU Wins! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)
             } else if (cpuWin < playerWin){
