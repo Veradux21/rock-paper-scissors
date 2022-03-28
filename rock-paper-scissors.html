@@ -38,21 +38,20 @@
                     result = `You Lose! ${cpu} beats ${player}!`;
                 } else { result = `You Win! ${player} beats ${cpu}!`;
                 };
-            console.table([result, cpu, player])    
+///*For Debugging!*/console.table([result, cpu, player])    
             return result;
         }
 
-        /* console.log(playRound(playerSelection, cpuSelection)) */
+        let cpuWin = 0;
+        let playerWin = 0;
         
         function game(){
+            cpuWin = 0;
+            playerWin = 0;
             for (let i=0; i<5; i++){
                 let playerSelection = prompt("Rock, Paper, or Scissors?");
-                /* playerSelection = cap(playerSelection) */
-                console.log("Player chose: " + playerSelection)
+                console.log("Player chose: " + cap(playerSelection))
                 let cpuSelection = cpuPlay();
-                console.log(cpuSelection);
-                let cpuWin = 0;
-                let playerWin = 0;
                 let resultMessage = playRound(playerSelection,cpuSelection);
                 if (resultMessage.slice(0,7) == "You Win"){
                     playerWin++;
@@ -62,12 +61,13 @@
                     console.log(resultMessage);
                 } else {console.log(resultMessage)}
             }
+            if (cpuWin > playerWin) {
+                console.log(`Final result! CPU Wins! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)
+            } else if (cpuWin < playerWin){
+                console.log(`Final result! Player Wins! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)
+            } else { console.log(`Y'all Tied! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)}
         }
 
-        /* 
-        `You Lose! ${cpuSelection} beats ${playerSelection}!`; 
-        `You Win! ${playerSelection} beats ${cpuSelection}!`;
-        */
     </script>
 </head>
 <body>
