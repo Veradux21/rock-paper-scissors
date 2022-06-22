@@ -5,8 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>
+</head>
+<body>
+    <div class="opt">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <div class="score"></div>
+    <div class="result">
+        <div></div>
+    </div>
+</body>
 
+    <script>
+        let cpuScore = 0;
+        let playerScore = 0;
+        let flavor;
+        
         //Standard Function to ensure that any entry is Title Cased
         let cap = function(string) {
             string = string.toLowerCase();
@@ -30,50 +46,75 @@
         //Function to run a single game based on parameters.
         function playRound(player, cpu) {
             player = cap(player);
-            let result;
             if (!(player == "Rock" || player == "Scissors" || player == "Paper")) { 
                 console.log("Please try again by entering Rock, Paper, or Scissors!");
                 return;
             } else if (player == cpu){
-                    result = "You Draw!"
+                    flavor = "You Draw!"
                 } else if ((player == "Rock" && cpu == "Paper") || (player == "Paper" && cpu == "Scissors") || (player == "Scissors" && cpu == "Rock")){
-                    result = `You Lose! ${cpu} beats ${player}!`;
-                } else { result = `You Win! ${player} beats ${cpu}!`;
-                };
-///*For Debugging!*/console.table([result, cpu, player])    
-            return result;
+                    flavor = `You Lose! ${cpu} beats ${player}!`;
+                    cpuScore ++;
+                } else { 
+                    flavor = `You Win! ${player} beats ${cpu}!`;
+                    playerScore ++;
+                }; 
+            updateScore()
+            updateResult()
         }
 
-        //Runs 5 games, tracks score, and presents score. Utilizes cpuPlay to define CPU parameter, prompt for player parameter of playRound.        
-        function game(){
-            let cpuWin = 0;
-            let playerWin = 0;
-            //Run 5 Games
-            for (let i=0; i<5; i++){
-                let playerSelection = prompt("Rock, Paper, or Scissors?"); //Use Prompt to determine player RPS
-///*For Debugging!*/console.log("Player chose: " + cap(playerSelection))
-                let cpuSelection = cpuPlay(); //Use cpuPlay to determine random RPS
-                let resultMessage = playRound(playerSelection,cpuSelection);
-                if (resultMessage.slice(0,7) == "You Win"){
-                    playerWin++;//increment for score tracking
-                    console.log(resultMessage); //publish single game result
-                } else if (resultMessage.slice(0,7) == "You Los"){
-                    cpuWin++;
-                    console.log(resultMessage);
-                } else {console.log(resultMessage)} //Publish Draw result
-            }
-            //Present Final Score
-            if (cpuWin > playerWin) {
-                console.log(`Final result! CPU Wins! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)
-            } else if (cpuWin < playerWin){
-                console.log(`Final result! Player Wins! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)
-            } else { console.log(`Y'all Tied! \nCPU: ${cpuWin}\nPlayer: ${playerWin}`)}
+        function updateScore() {
+            const score = document.querySelector('.score');
+            const currScore = score.lastElementChild;
+            if(currScore !== null){
+                score.removeChild(currScore);
+                };
+            const newScore = document.createElement('div');
+            newScore.textContent = `player: ${playerScore}. cpu: ${cpuScore}`;
+            score.appendChild(newScore);
         }
+
+        function updateResult() {
+            const resultDiv = document.querySelector('.result')
+            const resultMessage = resultDiv.firstElementChild
+
+            if(cpuScore == 5 || playerScore == 5){
+                if (cpuScore > playerScore) {
+                    result = `Final result! CPU Wins! \nCPU: ${cpuScore}\nPlayer: ${playerScore}`
+                    
+                } else if (cpuScore < playerScore){
+                    result = `Final result! Player Wins! \nCPU: ${cpuScore}\nPlayer: ${playerScore}`
+                } else { result = `Y'all Tied! \nCPU: ${cpuScore}\nPlayer: ${playerScore}`}
+                resultDiv.removeChild(resultMessage);
+                resultMessage.textContent = result;
+                resultDiv.appendChild(resultMessage);
+            } else if (resultMessage == null) { return
+            } else {
+              resultDiv.removeChild(resultMessage);
+              resultMessage.textContent = flavor;
+              resultDiv.appendChild(resultMessage);
+
+            }
+        }
+
+        //function for button to score reset in the future
+/*         function resetScore() {
+            const score = document.querySelector('.score')
+
+        } */
+
+        // Function to use an event listener click as the player's choice
+        function buttonClick(e) {
+            const player = e.target.id;
+            const cpuSelection = cpuPlay(); //Use cpuPlay to determine random RPS
+/*             console.log(player);
+            console.log(cpuSelection); */
+            console.log(playRound(player, cpuSelection));
+        }
+
+
+        const buttons = Array.from(document.querySelectorAll('.opt button'));
+        buttons.forEach(button => button.addEventListener('click', buttonClick));
 
     </script>
-</head>
-<body>
-    
-</body>
 </html>
 
